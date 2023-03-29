@@ -10,12 +10,13 @@ const refs = getRefs();
 
 refs.input.addEventListener(`input`, debounce(onSearch, DEBOUNCE_DELAY));
 
-function onSearch(e) {
-    e.preventDefault();
+async function onSearch(e) {
+    try {
+        e.preventDefault();
     clearCountryContainer();
     const name = e.target.value.trim();
     if (name === "") {
-        return;
+    return;
     }
     fetchCountries(name)
         .then(response => {
@@ -25,9 +26,11 @@ function onSearch(e) {
         return response.json();
     })
     .then(renderCountryContainer)
-    .catch(error => {
+    }
+    
+    catch(error) {
             console.log(error)
-    });
+    };
 };
 
 function clearCountryContainer() {
